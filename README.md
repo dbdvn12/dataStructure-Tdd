@@ -5,7 +5,7 @@ Tdd와 Data Structure를 공부하기 위해서 작성한 저장소입니다.
 * JDK >=8.x
 * gradle or Intellij
 
-##TODO
+## TODO
 - [ ] add
 - [ ] remove
 - [ ] iterator
