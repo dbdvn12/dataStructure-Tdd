@@ -15,4 +15,14 @@ public class MyArrayListTest {
         assertThat(myArrayList).isInstanceOf(MyArrayList.class);
         assertThat(myArrayList).isInstanceOf(List.class);
     }
+
+    @Test
+    public void testMyArrayListAdd() {
+        List<String> myArrayList=new MyArrayList<>();
+        myArrayList.add("Hello");
+        myArrayList.add("Java");
+        myArrayList.add(1,"interesting");
+        assertThat(myArrayList.get(0)).isEqualTo("Hello");
+        assertThat(myArrayList.get(1)).isEqualTo("interesting");
+    }
 }

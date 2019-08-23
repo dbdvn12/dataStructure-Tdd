@@ -21,18 +21,66 @@ public class MyArrayList<String> implements List<String> {
     }
 
     @Override
-    public boolean add(String s) {
-        return false;
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    @Override
+    public void clear() {
+        size = 0;
+    }
+
+    @Override
+    public String get(int index) {
+        if (index < 0 || index >= size)
+            throw new IndexOutOfBoundsException();
+        return array[index];
+    }
+
+    @Override
+    public boolean add(String element) {
+        if (size >= array.length) {
+            String[] bigger = (String[]) new Object[array.length * 2];
+            System.arraycopy(array, 0, bigger, 0, array.length);
+            array = bigger;
+        }
+        array[size] = element;
+        size++;
+        return true;
     }
 
     @Override
     public void add(int index, String element) {
-
+        if (index < 0 || index >= size)
+            throw new IndexOutOfBoundsException();
+        add(element);
+        for (int i = size - 1; i > index; i--) {
+            array[i] = array[i - 1];
+        }
+        array[index] = element;
     }
 
     @Override
-    public boolean isEmpty() {
-        return size==0;
+    public boolean addAll(Collection<? extends String> c) {
+        boolean flag = true;
+        for (String element : c) {
+            flag &= add(element);
+        }
+        return flag;
+    }
+
+    @Override
+    public boolean addAll(int index, Collection<? extends String> c) {
+        boolean flag = true;
+        String[] tmp = array;
+        String[] bigger = (String[]) new Object[array.length + c.size()];
+        System.arraycopy(array, 0, bigger, 0, index - 1);
+        array = bigger;
+        for (String element : c) {
+            flag&=add(element);
+        }
+        System.arraycopy(array, index + c.size(), tmp, index, tmp.length);
+        return flag;
     }
 
     @Override
@@ -66,16 +114,6 @@ public class MyArrayList<String> implements List<String> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends String> c) {
-        return false;
-    }
-
-    @Override
-    public boolean addAll(int index, Collection<? extends String> c) {
-        return false;
-    }
-
-    @Override
     public boolean removeAll(Collection<?> c) {
         return false;
     }
@@ -83,16 +121,6 @@ public class MyArrayList<String> implements List<String> {
     @Override
     public boolean retainAll(Collection<?> c) {
         return false;
-    }
-
-    @Override
-    public void clear() {
-
-    }
-
-    @Override
-    public String get(int index) {
-        return null;
     }
 
     @Override
