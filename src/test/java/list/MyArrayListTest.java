@@ -25,4 +25,15 @@ public class MyArrayListTest {
         assertThat(myArrayList.get(0)).isEqualTo("Hello");
         assertThat(myArrayList.get(1)).isEqualTo("interesting");
     }
+
+    @Test
+    public void testMyArrayListRemove() {
+        List<String> myArrayList=new MyArrayList<>();
+        myArrayList.add("Hello");
+        myArrayList.add("interesting");
+        myArrayList.add("Java");
+        myArrayList.remove("Hello");
+        myArrayList.remove(1);
+        assertThat(myArrayList.get(0)).isEqualTo("interesting");
+    }
 }
