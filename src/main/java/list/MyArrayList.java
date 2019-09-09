@@ -1,9 +1,6 @@
 package list;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 public class MyArrayList<String> implements List<String> {
 
@@ -100,12 +97,30 @@ public class MyArrayList<String> implements List<String> {
 
     @Override
     public boolean contains(Object o) {
-        return false;
+        return indexOf(o)>=0;
     }
 
     @Override
     public Iterator<String> iterator() {
-        return null;
+        return new Itr();
+    }
+
+    private class Itr implements Iterator<String> {
+        int cursor;
+
+        @Override
+        public boolean hasNext() {
+            if(cursor<size)
+                return true;
+            return false;
+        }
+
+        @Override
+        public String next() {
+            String curElement=get(cursor);
+            cursor++;
+            return curElement;
+        }
     }
 
     @Override
