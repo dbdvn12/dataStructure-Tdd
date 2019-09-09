@@ -1,9 +1,6 @@
 package list;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 public class MyArrayList<String> implements List<String> {
 
@@ -35,6 +32,21 @@ public class MyArrayList<String> implements List<String> {
         if (index < 0 || index >= size)
             throw new IndexOutOfBoundsException();
         return array[index];
+    }
+
+    private boolean equals(Object target, Object element) {
+        if (target == null)
+            return element == null;
+        else return target.equals(element);
+    }
+
+    @Override
+    public int indexOf(Object o) {
+        for (int i = 0; i < size; i++) {
+            if (equals(o, array[i]))
+                return i;
+        }
+        return -1;
     }
 
     @Override
@@ -77,7 +89,7 @@ public class MyArrayList<String> implements List<String> {
         System.arraycopy(array, 0, bigger, 0, index - 1);
         array = bigger;
         for (String element : c) {
-            flag&=add(element);
+            flag &= add(element);
         }
         System.arraycopy(array, index + c.size(), tmp, index, tmp.length);
         return flag;
@@ -85,12 +97,30 @@ public class MyArrayList<String> implements List<String> {
 
     @Override
     public boolean contains(Object o) {
-        return false;
+        return indexOf(o)>=0;
     }
 
     @Override
     public Iterator<String> iterator() {
-        return null;
+        return new Itr();
+    }
+
+    private class Itr implements Iterator<String> {
+        int cursor;
+
+        @Override
+        public boolean hasNext() {
+            if(cursor<size)
+                return true;
+            return false;
+        }
+
+        @Override
+        public String next() {
+            String curElement=get(cursor);
+            cursor++;
+            return curElement;
+        }
     }
 
     @Override
@@ -105,16 +135,34 @@ public class MyArrayList<String> implements List<String> {
 
     @Override
     public boolean remove(Object o) {
+        if (indexOf(o) == -1)
+            return false;
+        remove(indexOf(o));
+        return true;
+    }
+
+    @Override
+    public String remove(int index) {
+        String deleteElement = get(index);
+        for (int i = index; i < size - 1; i++) {
+            array[i] = array[i + 1];
+        }
+        array[size - 1] = null;
+        size--;
+        return deleteElement;
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> c) {
+        for (Object element : c) {
+            while (indexOf(element) != -1)
+                remove(element);
+        }
         return false;
     }
 
     @Override
     public boolean containsAll(Collection<?> c) {
-        return false;
-    }
-
-    @Override
-    public boolean removeAll(Collection<?> c) {
         return false;
     }
 
@@ -126,16 +174,6 @@ public class MyArrayList<String> implements List<String> {
     @Override
     public String set(int index, String element) {
         return null;
-    }
-
-    @Override
-    public String remove(int index) {
-        return null;
-    }
-
-    @Override
-    public int indexOf(Object o) {
-        return 0;
     }
 
     @Override

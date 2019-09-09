@@ -6,6 +6,6 @@ Tdd와 DataStructure를 공부하기 위해서 작성한 저장소입니다.
 * gradle or Intellij
 
 ## TODO
-- [ ] add
+- [X] add
 - [ ] remove
-- [ ] iterator
+- [X] iterator
